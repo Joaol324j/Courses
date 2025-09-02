@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão de Alunos | CursoPro</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/students.css">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-curso-pro fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand navbar-brand-curso" href="#">
+          <i class="fas fa-graduation-cap"></i>
+          <span>CursoPro</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link nav-link-curso" href="/home">
+                <i class="fas fa-home me-1"></i> Início
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-link-curso" href="/cursos">
+                <i class="fas fa-book me-1"></i> Cursos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-link-curso active" href="/alunos">
+                <i class="fas fa-users me-1"></i> Alunos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-link-curso" href="/professores">
+                <i class="fas fa-chalkboard-teacher me-1"></i> Professores
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-link-curso" href="/disciplinas">
+                <i class="fas fa-book-open me-1"></i> Disciplinas
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link nav-link-curso logout-btn-curso"
+                href="#"
+                id="logoutBtn"
+              >
+                <i class="fas fa-sign-out-alt me-1"></i> Sair
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Container Principal -->
+    <div class="main-container">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h2 class="fw-bold mb-0">
+              <i class="fas fa-users me-2"></i> Gerenciamento de Alunos
+            </h2>
+          </div>
+          <div class="col-md-6 text-end">
+            <button
+              class="btn btn-curso-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#addStudentModal"
+            >
+              <i class="fas fa-plus me-2"></i> Novo Aluno
+            </button>
+          </div>
+        </div>
+
+        <!-- Card da Tabela -->
+        <div class="card card-curso">
+          <div
+            class="card-header card-header-curso d-flex justify-content-between align-items-center"
+          >
+            <h5 class="mb-0">Lista de Alunos</h5>
+            <span class="badge-aluno-count" id="totalStudents">0 alunos</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-curso table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th width="50px">#</th>
+                    <th>Aluno</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Status</th>
+                    <th width="120px">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-footer d-flex justify-content-between align-items-center bg-white"
+          >
+            <div class="text-muted small">
+              Mostrando <span id="showingCount">0</span> de
+              <span id="totalCount">0</span> registros
+            </div>
+            <nav>
+              <ul class="pagination mb-0" id="pagination">
+                <!-- Paginação será gerada via JavaScript -->
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-main">
+          <div class="footer-column">
+            <div class="footer-logo">CursoPro</div>
+            <p class="footer-description">
+              Plataforma de gestão educacional que simplifica a administração de cursos,
+              alunos e matrículas, proporcionando uma experiência completa para instituições de ensino.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Links Rápidos</h3>
+            <ul class="footer-links">
+              <li><a href="/home"><i class="fas fa-chevron-right me-2"></i>Início</a></li>
+              <li><a href="/cursos"><i class="fas fa-chevron-right me-2"></i>Cursos</a></li>
+              <li><a href="/alunos"><i class="fas fa-chevron-right me-2"></i>Alunos</a></li>
+              <li><a href="/disciplinas"><i class="fas fa-chevron-right me-2"></i>Disciplinas</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Contato</h3>
+            <ul class="contact-info">
+              <li>
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Av. Paulista, 1000 - São Paulo, SP</span>
+              </li>
+              <li>
+                <i class="fas fa-phone-alt"></i>
+                <span>(11) 1234-5678</span>
+              </li>
+              <li>
+                <i class="fas fa-envelope"></i>
+                <span>contato@cursopro.com.br</span>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i>
+                <span>Seg-Sex: 9:00 - 18:00</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Newsletter</h3>
+            <p class="footer-description">
+              Assine nossa newsletter para receber atualizações e novidades sobre a plataforma.
+            </p>
+            <form class="d-flex">
+              <input type="email" class="form-control me-2" placeholder="Seu e-mail">
+              <button class="btn btn-primary" type="submit">Assinar</button>
+            </form>
+          </div>
+        </div>
+        
+        <div class="text-center pt-4 border-top border-secondary">
+          <p class="mb-0">&copy; 2025 CursoPro. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Modal Adicionar Aluno -->
+    <div
+      class="modal fade"
+      id="addStudentModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Adicionar Novo Aluno</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="studentForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Nome Completo *</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-curso"
+                    id="studentName"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">E-mail *</label>
+                  <input
+                    type="email"
+                    class="form-control form-control-curso"
+                    id="studentEmail"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Telefone</label>
+                  <input
+                    type="tel"
+                    class="form-control form-control-curso"
+                    id="studentPhone"
+                    placeholder="(00) 00000-0000"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Data de Nascimento</label>
+                  <input
+                    type="date"
+                    class="form-control form-control-curso"
+                    id="studentBirthDate"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">CPF</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-curso"
+                    id="studentCpf"
+                    placeholder="000.000.000-00"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Status</label>
+                  <select
+                    class="form-select form-control-curso"
+                    id="studentStatus"
+                  >
+                    <option value="active" selected>Ativo</option>
+                    <option value="inactive">Inativo</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary btn-curso-primary"
+              id="saveStudentBtn"
+            >
+              Salvar Aluno
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Editar Aluno -->
+    <div
+      class="modal fade"
+      id="editStudentModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Aluno</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="editStudentForm">
+              <input type="hidden" id="editStudentId" />
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Nome Completo *</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-curso"
+                    id="editStudentName"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">E-mail *</label>
+                  <input
+                    type="email"
+                    class="form-control form-control-curso"
+                    id="editStudentEmail"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Telefone</label>
+                  <input
+                    type="tel"
+                    class="form-control form-control-curso"
+                    id="editStudentPhone"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Data de Nascimento</label>
+                  <input
+                    type="date"
+                    class="form-control form-control-curso"
+                    id="editStudentBirthDate"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">CPF</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-curso"
+                    id="editStudentCpf"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Status</label>
+                  <select
+                    class="form-select form-control-curso"
+                    id="editStudentStatus"
+                  >
+                    <option value="active">Ativo</option>
+                    <option value="inactive">Inativo</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary btn-curso-primary"
+              id="updateStudentBtn"
+            >
+              Atualizar Aluno
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalTitle">Confirmar ação</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="confirmModalBody">
+            Tem certeza que deseja excluir este aluno?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-danger" id="confirmActionBtn">
+              Confirmar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/students.js"></script>    
+    </script>
+  </body>
+</html>
