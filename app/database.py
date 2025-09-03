@@ -2,17 +2,17 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from app.models.base import Base
-import os
+from app.config.settings import settings # Importa o objeto settings
 import logging
 
 # Configuração do logger
 logger = logging.getLogger(__name__)
 
 # Configuração do banco de dados
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@db:5432/course_management")
+DATABASE_URL = settings.DATABASE_URL
 
 # Criar engine do SQLAlchemy
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {}, pool_pre_ping=True)
 
 # Criar sessão do SQLAlchemy
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

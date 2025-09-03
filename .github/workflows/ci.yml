@@ -16,15 +16,26 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest tests/test_courses.py
+
+    - name: Cleanup Docker
+      run: |
+        docker container prune -f
+        docker image prune -f
+        docker network prune -f
 
     - name: Build Docker image
-      run: docker build -t fast-pizza:$(echo $GITHUB_SHA | cut -c1-7) .
+      run: docker build -t course:$(echo $GITHUB_SHA | cut -c1-7) .

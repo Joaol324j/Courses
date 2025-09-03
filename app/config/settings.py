@@ -15,7 +15,7 @@ class Settings(BaseModel):
     # Configurações do banco de dados
     DATABASE_URL: str = os.getenv(
         "DATABASE_URL",
-        "postgresql://postgres:postgres@db:5432/course_management"
+        "sqlite:///./test.db" 
     )
     
     # Configurações de segurança
