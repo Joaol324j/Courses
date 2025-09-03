@@ -29,5 +29,11 @@ jobs:
     - name: Run tests
       run: pytest tests/test_courses.py
 
+    - name: Cleanup Docker
+      run: |
+        docker container prune -f
+        docker image prune -f
+        docker network prune -f
+
     - name: Build Docker image
       run: docker build -t course:$(echo $GITHUB_SHA | cut -c1-7) .
